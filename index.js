@@ -196,7 +196,7 @@ function doRender(req, res, opts) {
   renderChart(width, height, backgroundColor, devicePixelRatio, untrustedInput)
     .then((...args) => {
       const end = performance.now();
-      logger.info(`renderChart execution took ${Math.trunc(end - start)} ms`);
+      logger.info(`renderChart execution took ${Math.floor(end - start)} ms`);
       opts.onRenderHandler(...args);
     })
     .catch(err => {
