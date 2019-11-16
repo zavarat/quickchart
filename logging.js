@@ -10,7 +10,7 @@ const loggingBunyan = new LoggingBunyan({
 
 function getStreams() {
   const streams = [{ stream: process.stdout, level: process.env.LOG_LEVEL }];
-  if (true) {
+  if (process.env.NODE_ENV === 'production' && process.env.STACKDRIVER_PROJECT_ID) {
     console.log('Using stackdriver logging!');
     streams.push(loggingBunyan.stream('debug'));
   } else {
