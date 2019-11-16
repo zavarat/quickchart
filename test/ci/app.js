@@ -23,7 +23,7 @@ function assertSimilarRgb(expected, actual, tolerance = 6) {
 describe('chart request', () => {
   it('returns a basic chart via GET', done => {
     request(app)
-      .get(`/chart?c=${encodeURIComponent(JSON.stringify(BASIC_CHART))}`)
+      .get(`/chart?c=${encodeURIComponent(BASIC_CHART)}`)
       .expect('Content-Type', 'image/png')
       .expect(200)
       .end((err, res) => {
@@ -36,9 +36,7 @@ describe('chart request', () => {
 
   it('returns a basic chart via GET, base64 encoded', done => {
     request(app)
-      .get(
-        `/chart?c=${Buffer.from(JSON.stringify(BASIC_CHART)).toString('base64')}&encoding=base64`,
-      )
+      .get(`/chart?c=${Buffer.from(BASIC_CHART).toString('base64')}&encoding=base64`)
       .expect('Content-Type', 'image/png')
       .expect(200)
       .end((err, res) => {
@@ -66,7 +64,7 @@ describe('chart request', () => {
     request(app)
       .get(
         `/chart?c=${encodeURIComponent(
-          JSON.stringify(BASIC_CHART),
+          BASIC_CHART,
         )}&width=200&height=100&devicePixelRatio=1&backgroundColor=rgb(249, 193, 202)`,
       )
       .expect('Content-Type', 'image/png')
@@ -102,7 +100,7 @@ describe('chart request', () => {
     request(app)
       .post('/chart')
       .send({
-        chart: Buffer.from(JSON.stringify(BASIC_CHART)).toString('base64'),
+        chart: Buffer.from(BASIC_CHART).toString('base64'),
         encoding: 'base64',
       })
       .expect('Content-Type', 'image/png')

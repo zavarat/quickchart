@@ -1,6 +1,6 @@
 const javascriptStringify = require('javascript-stringify').stringify;
 
-const BASIC_CHART = {
+const BASIC_CHART = JSON.stringify({
   type: 'bar',
   data: {
     labels: [2012, 2013, 2014, 2015, 2016],
@@ -11,7 +11,7 @@ const BASIC_CHART = {
       },
     ],
   },
-};
+});
 
 const JS_CHART = javascriptStringify({
   type: 'bar',
@@ -64,7 +64,44 @@ const JS_CHART = javascriptStringify({
   },
 });
 
+const BROKEN_CHART_1 = JSON.stringify({
+  type: 'line',
+  data: {
+    labels: [],
+    datasets: [{ data: [9999999999999999999999999999999] }],
+  },
+  options: { scales: { yAxes: [{ ticks: { suggestedMin: 1, stepSize: 1 } }] } },
+});
+
+const BROKEN_CHART_2 = javascriptStringify({
+  type: 'bar',
+  data: {
+    labels: ['1'],
+    datasets: [
+      {
+        data: [6],
+      },
+    ],
+  },
+  options: {
+    scales: {
+      yAxes: [
+        {
+          stacked: true,
+          ticks: {
+            callback: function(value) {
+              Buffer.allocUnsafe(42);
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+
 module.exports = {
   BASIC_CHART,
   JS_CHART,
+  BROKEN_CHART_1,
+  BROKEN_CHART_2,
 };
