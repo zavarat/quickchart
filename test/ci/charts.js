@@ -41,6 +41,11 @@ describe('charts.js', () => {
     }
   });
 
+  it('renders a JS chart fine after breaking', async () => {
+    const buf = await chartsLib.renderChart(200, 100, 'white', 2.0, JS_CHART);
+    assert(buf.length > 0);
+  });
+
   it('handles a breaking chart - sandbox', async () => {
     try {
       const result = await chartsLib.renderChart(200, 100, 'white', 2.0, BROKEN_CHART_2);
@@ -48,10 +53,5 @@ describe('charts.js', () => {
     } catch (err) {
       assert(err.indexOf('Cannot read property') > -1);
     }
-  });
-
-  it('renders a JS chart fine after breaking', async () => {
-    const buf = await chartsLib.renderChart(200, 100, 'white', 2.0, JS_CHART);
-    assert(buf.length > 0);
   });
 });
