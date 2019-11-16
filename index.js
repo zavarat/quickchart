@@ -1,4 +1,5 @@
 const path = require('path');
+const { performance } = require('perf_hooks');
 
 const express = require('express');
 const expressNunjucks = require('express-nunjucks');
@@ -191,8 +192,13 @@ function doRender(req, res, opts) {
 
   const backgroundColor = opts.backgroundColor || 'transparent';
 
+  const start = performance.now();
   renderChart(width, height, backgroundColor, devicePixelRatio, untrustedInput)
-    .then(opts.onRenderHandler)
+    .then((...args) => {
+      const end = performance.now();
+      logger.info(`renderChart execution took ${Math.trunc(end - start)} ms`);
+      opts.onRenderHandler(...args);
+    })
     .catch(err => {
       logger.error('Chart error', err);
       opts.failFn(res, err);
