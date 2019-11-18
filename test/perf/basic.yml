@@ -6,4 +6,4 @@ config:
 scenarios:
   - flow:
     - get:
-        url: '/healthcheck'
+        url: '/healthcheck/chart'
