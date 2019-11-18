@@ -184,7 +184,7 @@ function doRender(req, res, opts) {
     try {
       untrustedInput = Buffer.from(opts.chart, 'base64').toString('utf8');
     } catch (err) {
-      logger.error('base64 malformed', err);
+      logger.warn('base64 malformed', err);
       opts.failFn(res, err);
       return;
     }
@@ -200,7 +200,7 @@ function doRender(req, res, opts) {
       opts.onRenderHandler(...args);
     })
     .catch(err => {
-      logger.error('Chart error', err);
+      logger.warn('Chart error', err);
       opts.failFn(res, err);
     });
 }
@@ -269,7 +269,7 @@ app.get('/qr', (req, res) => {
   try {
     qrData = decodeURIComponent(req.query.text);
   } catch (err) {
-    logger.error('URI malformed', err);
+    logger.warn('URI malformed', err);
     failPng(res, 'URI malformed');
     return;
   }
