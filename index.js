@@ -12,6 +12,7 @@ const telemetry = require('./telemetry');
 const { getPdfBufferFromPng, getPdfBufferWithText } = require('./lib/pdf');
 const { logger } = require('./logging');
 const { renderChart } = require('./lib/charts');
+const { renderGoogleImageChart } = require('./lib/image_charts');
 const { renderQr, DEFAULT_QR_SIZE } = require('./lib/qr');
 
 const app = express();
@@ -293,6 +294,20 @@ app.get('/qr', (req, res) => {
     });
 
   telemetry.count('qrCount');
+});
+
+app.get('/google-image-chart', (req, res) => {
+  renderGoogleImageChart(req.query).then(buf => {
+    res.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Length': buf.length,
+
+      // 1 week cache
+      'Cache-Control': 'public, max-age=604800',
+    });
+    res.end(buf);
+  });
+  // TODO(ian): Telemetry.
 });
 
 app.get('/healthcheck', (req, res) => {
