@@ -12,7 +12,7 @@ const telemetry = require('./telemetry');
 const { getPdfBufferFromPng, getPdfBufferWithText } = require('./lib/pdf');
 const { logger } = require('./logging');
 const { renderChart } = require('./lib/charts');
-const { renderGoogleImageChart } = require('./lib/image_charts');
+const { toChartJs } = require('./lib/image_charts');
 const { renderQr, DEFAULT_QR_SIZE } = require('./lib/qr');
 
 const app = express();
@@ -296,8 +296,9 @@ app.get('/qr', (req, res) => {
   telemetry.count('qrCount');
 });
 
-app.get('/google-image-chart', (req, res) => {
-  renderGoogleImageChart(req.query).then(buf => {
+app.get('/gchart', (req, res) => {
+  const converted = toChartJs(req.query);
+  renderChart(converted.width, converted.height, 'white', undefined, converted.chart).then(buf => {
     res.writeHead(200, {
       'Content-Type': 'image/png',
       'Content-Length': buf.length,
