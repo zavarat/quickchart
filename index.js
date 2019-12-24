@@ -163,13 +163,13 @@ function doRender(req, res, opts) {
   let height = 300;
   let width = 500;
   if (opts.height) {
-    const heightNum = parseInt(opts.height, 10);
+    const heightNum = Math.min(1000, parseInt(opts.height, 10));
     if (!Number.isNaN(heightNum)) {
       height = heightNum;
     }
   }
   if (opts.width) {
-    const widthNum = parseInt(opts.width, 10);
+    const widthNum = Math.min(1000, parseInt(opts.width, 10));
     if (!Number.isNaN(widthNum)) {
       width = widthNum;
     }
