@@ -53,6 +53,9 @@ if (process.env.RATE_LIMIT_PER_MIN) {
       }
       return ret;
     },
+    keyGenerator: req => {
+      return req.headers['x-forwarded-for'] || req.ip;
+    },
   });
   app.use('/chart', limiter);
   app.use('/qr', limiter);
@@ -69,6 +72,10 @@ app.get('/', (req, res) => {
 
 app.get('/pricing', (req, res) => {
   res.render('pricing');
+});
+
+app.get('/documentation', (req, res) => {
+  res.render('docs');
 });
 
 app.get('/robots.txt', (req, res) => {
@@ -184,7 +191,7 @@ function doRender(req, res, opts) {
     try {
       untrustedInput = Buffer.from(opts.chart, 'base64').toString('utf8');
     } catch (err) {
-      logger.error('base64 malformed', err);
+      logger.warn('base64 malformed', err);
       opts.failFn(res, err);
       return;
     }
@@ -195,7 +202,7 @@ function doRender(req, res, opts) {
   renderChart(width, height, backgroundColor, devicePixelRatio, untrustedInput)
     .then(opts.onRenderHandler)
     .catch(err => {
-      logger.error('Chart error', err);
+      logger.warn('Chart error', err);
       opts.failFn(res, err);
     });
 }
@@ -254,7 +261,7 @@ app.get('/qr', (req, res) => {
 
   const { mode } = req.query;
 
-  const margin = parseInt(req.query.margin, 10) || 4;
+  const margin = typeof req.query.margin === 'undefined' ? 4 : parseInt(req.query.margin, 10);
   const ecLevel = req.query.ecLevel || undefined;
   const size = Math.min(3000, parseInt(req.query.size, 10)) || DEFAULT_QR_SIZE;
   const darkColor = req.query.dark || '000';
@@ -264,7 +271,7 @@ app.get('/qr', (req, res) => {
   try {
     qrData = decodeURIComponent(req.query.text);
   } catch (err) {
-    logger.error('URI malformed', err);
+    logger.warn('URI malformed', err);
     failPng(res, 'URI malformed');
     return;
   }
@@ -281,7 +288,7 @@ app.get('/qr', (req, res) => {
   renderQr(format, mode, qrData, qrOpts)
     .then(buf => {
       res.writeHead(200, {
-        'Content-Type': `image/${format}`,
+        'Content-Type': format === 'png' ? 'image/png' : 'image/svg+xml',
         'Content-Length': buf.length,
 
         // 1 week cache
@@ -337,7 +344,7 @@ app.get('/healthcheck/chart', (req, res) => {
 const port = process.env.PORT || 3400;
 const server = app.listen(port);
 
-const timeout = process.env.REQUEST_TIMEOUT_MS || 1000;
+const timeout = parseInt(process.env.REQUEST_TIMEOUT_MS, 10) || 1000;
 server.setTimeout(timeout);
 logger.info(`Setting request timeout: ${timeout} ms`);
 

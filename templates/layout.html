@@ -13,7 +13,7 @@
   <meta name="theme-color" content="#ffffff">
   <title>{% block title %}{% endblock %}</title>
   {% include "meta.html" %}
-  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="stylesheet" href="/css/home.css?v=20200110" />
   {% include "shared.css" %}
   {% block styles %}{% endblock %}
 </head>
@@ -29,6 +29,14 @@
     </div>
   {% endblock %}
   {% block content %}{% endblock %}
+  <footer>
+    <div class="footer-content">
+      &copy; Alioth LLC 2019
+      <div class="footer-right">
+        <a href="#">Back to top</a>
+      </div>
+    </div>
+  </footer>
   {% block scripts %}{% endblock %}
 </body>
 </html>
