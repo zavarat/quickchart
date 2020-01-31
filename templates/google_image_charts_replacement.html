@@ -27,13 +27,17 @@
   }
 
   .params-table {
-    width: 100%;
     border-collapse: collapse;
+    margin: 0 auto;
   }
 
   .params-table th, .params-table td {
     border: 1px solid #404040;
     padding: 0.5em 1em;
+  }
+
+  .params-table .parameter {
+    font-weight: bold;
   }
 </style>
 {% endblock %}
@@ -49,7 +53,7 @@
 
 {% block content %}
 <div class="header header-small">
-  <h1>QuickChart Documentation for <span class="highlight">Google Image Charts Replacement</span></h1>
+  <h1><span class="highlight">Replacing Google Image Charts</span> with QuickChart</h1>
 </div>
 <div class="split-container">
   <div class="left-container">
@@ -100,14 +104,14 @@
       Migrating is easy.  Just replace <strong><code>chart.googleapis.com</code></strong> with <strong><code>quickchart.io</code></strong> in the URL.
     </p>
     <p>
-      For example, the URL: <a href="https://chart.googleapis.com/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10">https://<strong>chart.googleapis.com</strong>/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10</a>
+      For example, the URL: <a href="https://chart.googleapis.com/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10">https://<strong>chart.googleapis.com</strong>/chart?cht=bvg&chs=300x200<wbr>&chd=t:5,5,5|10,10,10|15,15,15<wbr>&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a<wbr>&chxs=0,000000,0,0,_&chxt=y<wbr>&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10</a>
     </p>
     <div class="img-container">
       <img src="https://chart.googleapis.com/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10" />
       <em>Google Image Charts</em>
     </div>
     <p>
-      Should be changed to: <a href="https://quickchart.io/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10">https://<strong>quickchart.io</strong>/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10</a>
+      Should be changed to: <a href="https://quickchart.io/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10">https://<strong>quickchart.io</strong>/chart?cht=bvg&chs=300x200<wbr>&chd=t:5,5,5|10,10,10|15,15,15<wbr>&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a<wbr>&chxs=0,000000,0,0,_&chxt=y<wbr>&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10</a>
     </p>
     <div class="img-container">
       <img src="/gchart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10" />
@@ -116,7 +120,7 @@
 
     <h2>Supported Parameters</h2>
     <p>
-      The most common Google Image Charts parameters are supported.  The table below follows the format of <a href="https://developers.google.com/chart/image/docs/chart_params">Google Image Charts</a> list of parameters.
+      The most common Google Image Charts parameters are supported.  The implementation of each parameter matches the <a href="https://developers.google.com/chart/image/docs/chart_params">Google Image Charts</a> implementation as closely as possible.
     </p>
     <table class="params-table">
       <thead>
@@ -127,67 +131,67 @@
         </tr>
       </thead>
       <tr>
-        <td>chd</td>
+        <td class="parameter">cht</td>
+        <td>Chart type</td>
+        <td><strong>Required</strong> for all charts</td>
+      </tr>
+      <tr>
+        <td class="parameter">chd</td>
         <td>Chart data string</td>
-        <td>All charts (required!)</td>
+        <td><strong>Required</strong> for all charts</td>
       </tr>
       <tr>
-        <td>chdl,chdlp,chdls</td>
+        <td class="parameter">chdl, chdlp, chdls</td>
         <td>Chart legend text and style</td>
-        <td></td>
+        <td>All charts</td>
       </tr>
       <tr>
-        <td>chf</td>
+        <td class="parameter">chf</td>
         <td>Chart fill</td>
-        <td></td>
+        <td>All charts</td>
       </tr>
       <tr>
-        <td>chg</td>
+        <td class="parameter">chg</td>
         <td>Chart grid lines</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td>chl</td>
+        <td class="parameter">chl</td>
         <td>Pie chart labels</td>
         <td>Pie</td>
       </tr>
       <tr>
-        <td>chm</td>
+        <td class="parameter">chm</td>
         <td>Text and Data Value Markers</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td>chs</td>
+        <td class="parameter">chs</td>
         <td>Chart size</td>
         <td>All charts</td>
       </tr>
       <tr>
-        <td>cht</td>
-        <td>Chart type</td>
-        <td>All charts (required!)</td>
-      </tr>
-      <tr>
-        <td>chxt</td>
+        <td class="parameter">chxt</td>
         <td>Visible axes</td>
-        <td></td>
+        <td>Bar, Line</td>
       </tr>
       <tr>
-        <td>chtt, chts</td>
+        <td class="parameter">chtt, chts</td>
         <td>Chart title and style</td>
         <td>All charts</td>
       </tr>
       <tr>
-        <td>chxr</td>
+        <td class="parameter">chxr</td>
         <td>Axis ranges</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td>chxl</td>
+        <td class="parameter">chxl</td>
         <td>Axis labels</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td>chxs</td>
+        <td class="parameter">chxs</td>
         <td>Axis label styles</td>
         <td>Bar, Line</td>
       </tr>
@@ -197,7 +201,7 @@
     </p>
     <h2>Bar charts</h2>
     <p>
-      Here are some examples of bar charts.
+      Here are some examples of bar charts.  Each example shows a chart generated by Google Image Charts followed by the equivalent chart generated by QuickChart.
     </p>
     <h3>Vertical bar charts</h3>
     <p>

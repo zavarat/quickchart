@@ -78,7 +78,7 @@ app.get('/documentation', (req, res) => {
   res.render('docs');
 });
 
-app.get('/documentation/google-image-charts-replacement', (req, res) => {
+app.get('/documentation/migrating-from-google-image-charts', (req, res) => {
   res.render('google_image_charts_replacement');
 });
 
