@@ -78,6 +78,10 @@ app.get('/documentation', (req, res) => {
   res.render('docs');
 });
 
+app.get('/documentation/google-image-charts-replacement', (req, res) => {
+  res.render('google_image_charts_replacement');
+});
+
 app.get('/robots.txt', (req, res) => {
   res.sendFile(path.join(__dirname, './templates/robots.txt'));
 });

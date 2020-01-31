@@ -3,59 +3,7 @@
 {% block title %}Documentation | QuickChart{% endblock %}
 
 {% block styles %}
-<style>
-code strong {
-  font-size: 1.25em;
-}
-
-.tip {
-  background-color: #eee;
-  padding: 1em;
-}
-
-.split-container {
-  display: flex;
-  padding: 0.5em;
-}
-
-.left-container {
-  position: sticky;
-  top: 5em;
-  flex: 1;
-  align-self: flex-start;
-}
-
-.right-container {
-  flex: 4;
-}
-
-.docs-list {
-  list-style-type: none;
-}
-
-@media (max-height: 630px) {
-  .docs-list {
-    line-height: 1.4;
-  }
-}
-
-@media (max-height: 530px) {
-  .docs-list {
-    line-height: 1;
-  }
-}
-
-@media (max-width: 850px) {
-  .split-container {
-    display: block;
-  }
-
-  .left-container {
-    position: relative;
-    top: 0;
-  }
-}
-</style>
+{% include 'docs_styles.css' %}
 {% endblock %}
 
 {% block nav_menu %}
@@ -69,9 +17,7 @@ code strong {
 
 {% block content %}
 <div class="header header-small">
-  <div class="page-container">
-    <h1>QuickChart Documentation</h1>
-  </div>
+  <h1>QuickChart Documentation</h1>
 </div>
 <div class="split-container">
   <div class="left-container">

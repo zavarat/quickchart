@@ -1,0 +1,238 @@
+{% extends 'layout.html' %}
+
+{% block title %}Documentation: Google Image Charts Replacement | QuickChart{% endblock %}
+
+{% block styles %}
+{% include 'docs_styles.css' %}
+{% endblock %}
+
+{% block nav_menu %}
+<a href="/"><li>Home</li></a>
+<a href="/documentation" class="mobile-hide"><li>Documentation</li></a>
+<a href="/pricing"><li>Pricing</li></a>
+<a href="https://github.com/typpo/quickchart"><li>Open Source</li></a>
+<a href="/documentation#faq"><li>FAQ</li></a>
+<a href="mailto:support@quickchart.io" class="mobile-hide"><li>Support</li></a>
+{% endblock %}
+
+{% block content %}
+<div class="header header-small">
+  <h1>QuickChart Documentation for <span class="highlight">Google Image Charts Replacement</span></h1>
+</div>
+<div class="split-container">
+  <div class="left-container">
+    <ul class="docs-list">
+      <li><a href="#parameters">Basic API</a></li>
+      <li>
+        <a href="#advanced-api">Advanced API</a>
+        <ul>
+          <li><a href="#post-endpoint">POST endpoint</a></li>
+          <li><a href="#short-urls">Short URLs</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#chart-types">Chart types</a>
+        <ul>
+          <li><a href="#bar-graph">Bar</a></li>
+          <li><a href="#line-graph">Line</a></li>
+          <li><a href="#radar-chart">Radar</a></li>
+          <li><a href="#pie-chart">Pie</a></li>
+          <li><a href="#doughnut-chart">Doughnut</a></li>
+          <li><a href="#scatter-plot">Scatter</a></li>
+          <li><a href="#bubble-chart">Bubble</a></li>
+          <li><a href="#radial-gauge">Radial gauge</a></li>
+          <li><a href="#sparkline">Sparklines</a></li>
+          <li><a href="#mixed-chart">Mixed chart</a></li>
+          <li><a href="#qr">QR codes</a></li>
+        </ul>
+      </li>
+      <li><a href="#plugins">Annotations &amp; labels</a></li>
+      <li><a href="#sandbox">Sandbox Editor</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="mailto:support@quickchart.io">Contact support</a></li>
+    </ul>
+  </div>
+  <div class="right-container">
+    <h2>Getting Started</h2>
+    <p>
+      Welcome to the QuickChart manual for replacing Google Image Charts with QuickChart.
+    </p>
+    <p>
+      QuickChart is an open-source service that renders static chart images.  You can <a href="https://github.com/typpo/quickchart">host your own</a> server using the source code or a Docker container, or you can use the reliable <a href="https://quickchart.io">QuickChart.io</a> web service and not worry about hosting.
+    </p>
+    <p>
+      Most QuickChart users prefer the open-source <a href="/documentation">Chart.js format</a> over Google Image Charts format due to its superior flexibility, strong community, and open-source nature.  However, you may have already built your application on top of Google Image Charts.  This guide is dedicated to making the switch as easy as possible.
+    </p>
+    <h2>Migrating from Google Image Charts</h2>
+    <p>
+      Migrating is easy.  Just replace <strong><code>chart.googleapis.com</code></strong> with <strong><code>quickchart.io</code></strong> in the URL.
+    </p>
+    <p>
+      For example, the URL: <a href="https://chart.googleapis.com/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10">https://<strong>chart.googleapis.com</strong>/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10</a>
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10" />
+    </p>
+    <p>
+      Changes to: <a href="https://quickchart.io/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10">https://<strong>quickchart.io</strong>/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10</a>
+    </p>
+    <p>
+      <img src="/gchart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10" />
+    </p>
+    <p>
+      This one
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?cht=lc&chco=FF0000,00FF00,0000FF&chs=300x200&chd=s:FOETHECat,lkjtf3asv,KATYPSNXJ&chxt=x,y&chxl=0:|Oct|Nov|Dec|1:||20K||60K||100K" />
+    </p>
+    <p>
+      Becomes this one
+    </p>
+    <p>
+      <img src="/gchart?cht=lc&chco=FF0000,00FF00,0000FF&chs=300x200&chd=s:FOETHECat,lkjtf3asv,KATYPSNXJ&chxt=x,y&chxl=0:|Oct|Nov|Dec|1:||20K||60K||100K" />
+    </p>
+    <p>
+      This bad boy
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?cht=bvs&chd=s:YUVmw1&chco=FF0000&chs=180x150&chtt=Site+visitors+by+month%7CJanuary+to+July&chbh=22,4" />
+    </p>
+    <p>
+      Becomes this
+    </p>
+    <p>
+      <img src="/gchart?cht=bvs&chd=s:YUVmw1&chco=FF0000&chs=180x150&chtt=Site+visitors+by+month%7CJanuary+to+July&chbh=22,4" />
+    </p>
+    <p>
+      Before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?&cht=ls&chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&chco=ff0000,00ff00,0000ff&chs=250x150&chdl=NASDAQ|FTSE100|DOW" />
+    </p>
+    <p>
+      After
+    </p>
+    <p>
+      <img src="/gchart?&cht=ls&chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&chco=ff0000,00ff00,0000ff&chs=250x150&chdl=NASDAQ|FTSE100|DOW" />
+    </p>
+    <p>
+      First
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?cht=lc&chd=s:Uf9a,a3fG&chs=300x200&chl=1%7C2%7C3%7C4&chf=bg,s,e0e0e0&chco=000000,0000FF&chma=30,30,30,30&chdl=Temp%7CSales" />
+    </p>
+    <p>
+      Second
+    </p>
+    <p>
+      <img src="/gchart?cht=lc&chd=s:Uf9a,a3fG&chs=300x200&chl=1%7C2%7C3%7C4&chf=bg,s,e0e0e0&chco=000000,0000FF&chma=30,30,30,30&chdl=Temp%7CSales" />
+    </p>
+    <p>
+      before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?chxt=x,y,r,t&cht=bhs&chd=s:EUjVu&chco=76A4FB&chls=2.0&chs=200x190" />
+    </p>
+    <p>
+      after
+    </p>
+    <p>
+      <img src="/gchart?chxt=x,y,r,t&cht=bhs&chd=s:EUjVu&chco=76A4FB&chls=2.0&chs=200x190" />
+    </p>
+    <p>
+      before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?chxt=x,y&chxl=0:%7CJan%7CFeb%7CMarch%7CApril%7CMay%7C1:%7CMin%7CMid%7CMax&cht=lc&chd=s:cEAELFJHHHKUju9uuXUc&chco=76A4FB&chls=2.0&chs=300x200" />
+    </p>
+    <p>
+      after
+    </p>
+    <p>
+      <img src="/gchart?chxt=x,y&chxl=0:%7CJan%7CFeb%7CMarch%7CApril%7CMay%7C1:%7CMin%7CMid%7CMax&cht=lc&chd=s:cEAELFJHHHKUju9uuXUc&chco=76A4FB&chls=2.0&chs=300x200" />
+    </p>
+    <p>
+      before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?cht=bhs&chs=300x200&chd=t:10,50,60,80,40|50,60,100,40,20&chco=4d89f9,c6d9fd&chbh=20&chds=0,160" />
+    </p>
+    <p>
+      after
+    </p>
+    <p>
+      <img src="/gchart?cht=bhs&chs=300x200&chd=t:10,50,60,80,40|50,60,100,40,20&chco=4d89f9,c6d9fd&chbh=20&chds=0,160" />
+    </p>
+    <p>
+      before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?cht=bhs&chco=000000,FF0000|00FF00|0000FF&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
+    </p>
+    <p>
+      after
+    </p>
+    <p>
+      <img src="/gchart?cht=bhs&chco=000000,FF0000|00FF00|0000FF&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
+    </p>
+    <p>
+      before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?cht=bhs&chco=FF0000|00FF00|0000FF,FFC6A5|DEF3BD|C6EFF7&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
+    </p>
+    <p>
+      after
+    </p>
+    <p>
+      <img src="/gchart?cht=bhs&chco=FF0000|00FF00|0000FF,FFC6A5|DEF3BD|C6EFF7&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
+    </p>
+    <p>
+      before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=76A4FB&chls=2.0&chs=300x200&chxl=0:|2001|2002|2003&chxp=0,0" />
+    </p>
+    <p>
+      after
+    </p>
+    <p>
+      <img src="/gchart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=76A4FB&chls=2.0&chs=300x200&chxl=0:|2001|2002|2003&chxp=0,0" />
+    </p>
+    <p>
+      before
+    </p>
+    <p>
+      <img src="https://chart.googleapis.com/chart?chxt=x,x,y,y&cht=bvs&chd=s:c9ucD&chls=2.0&chs=300x200&chxl=1:%7CMartinis%7C3:%7CScore&chxp=1,50%7C3,50" />
+    </p>
+    <p>
+      after
+    </p>
+    <p>
+      <img src="/gchart?chxt=x,x,y,y&cht=bvs&chd=s:c9ucD&chls=2.0&chs=300x200&chxl=1:%7CMartinis%7C3:%7CScore&chxp=1,50%7C3,50" />
+    </p>
+    <h2>Parameters</h2>
+    <p>
+      Summary of parameters
+    </p>
+    <h2>Bar Charts</h2>
+    <h2>Line Charts</h2>
+    <h2>Pie Charts</h2>
+    <h2>Compound Charts</h2>
+    <h2>Multiple Axis Charts</h2>
+    <p>
+      Compound charts should use Chart.js
+    </p>
+    <h2>Google-O-Meter Charts</h2>
+    <p>
+      xx
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% include "sandbox_js.html" %}
+{% include "tracking.html" %}
+<script src="https://js.stripe.com/v3" async></script>
+{% endblock %}
