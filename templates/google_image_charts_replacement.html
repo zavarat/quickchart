@@ -5,6 +5,30 @@
 {% block styles %}
 {% include 'docs_styles.css' %}
 <style>
+  h4 {
+    font-size: 1.1em;
+  }
+
+  p code {
+    background-color: #eee;
+    padding: 0.3em;
+  }
+
+  .parameter-container {
+    border: 1px solid #ccc;
+    padding: 0 1em;
+    margin-bottom: 1em;
+  }
+
+  .syntax {
+    background-color: #eee;
+    padding: 1em;
+  }
+
+  .syntax code {
+    font-weight: bold;
+  }
+
   .img-container {
     background-color: #fafafa;
     padding: 1em;
@@ -17,7 +41,7 @@
     padding: 0;
   }
 
-  .img-container em {
+  .img-container span {
     display: block;
     margin-top: 0.5em;
   }
@@ -58,27 +82,15 @@
 <div class="split-container">
   <div class="left-container">
     <ul class="docs-list">
-      <li><a href="#parameters">Basic API</a></li>
+      <li><a href="#getting-started">Getting started</a></li>
+      <li><a href="#migrating">Migrating</a></li>
+      <li><a href="#parameters">Supported parameters</a></li>
       <li>
-        <a href="#advanced-api">Advanced API</a>
-        <ul>
-          <li><a href="#post-endpoint">POST endpoint</a></li>
-          <li><a href="#short-urls">Short URLs</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#chart-types">Chart types</a>
+        <a href="#chart-gallery">Chart gallery</a>
         <ul>
           <li><a href="#bar-graph">Bar</a></li>
           <li><a href="#line-graph">Line</a></li>
-          <li><a href="#radar-chart">Radar</a></li>
           <li><a href="#pie-chart">Pie</a></li>
-          <li><a href="#doughnut-chart">Doughnut</a></li>
-          <li><a href="#scatter-plot">Scatter</a></li>
-          <li><a href="#bubble-chart">Bubble</a></li>
-          <li><a href="#radial-gauge">Radial gauge</a></li>
-          <li><a href="#sparkline">Sparklines</a></li>
-          <li><a href="#mixed-chart">Mixed chart</a></li>
           <li><a href="#qr">QR codes</a></li>
         </ul>
       </li>
@@ -89,7 +101,7 @@
     </ul>
   </div>
   <div class="right-container">
-    <h2>Getting Started</h2>
+    <h2 id="getting-started">Getting Started</h2>
     <p>
       Welcome to the QuickChart guide for replacing Google Image Charts with QuickChart.  This page is for people who are looking to replace existing Google Image Charts implementations.  To start from scratch with QuickChart, go to the <a href="/documentation">main documentation</a>.
     </p>
@@ -99,7 +111,7 @@
     <p>
       Most QuickChart users prefer the open-source <a href="/documentation">Chart.js format</a> over Google Image Charts format due to its flexibility, strong community, and open-source nature.  This guide is for people who have already implemented the deprecated Google Image Charts format and want to switch to an open-source alternative.
     </p>
-    <h2>Migrating from Google Image Charts</h2>
+    <h2 id="migrating">Migrating from Google Image Charts</h2>
     <p>
       Migrating is easy.  Just replace <strong><code>chart.googleapis.com</code></strong> with <strong><code>quickchart.io</code></strong> in the URL.
     </p>
@@ -108,17 +120,17 @@
     </p>
     <div class="img-container">
       <img src="https://chart.googleapis.com/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10" />
-      <em>Google Image Charts</em>
+      <span><em>Google Image Charts</em></span>
     </div>
     <p>
       Should be changed to: <a href="https://quickchart.io/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10">https://<strong>quickchart.io</strong>/chart?cht=bvg&chs=300x200<wbr>&chd=t:5,5,5|10,10,10|15,15,15<wbr>&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a<wbr>&chxs=0,000000,0,0,_&chxt=y<wbr>&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10</a>
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10" />
-      <em>QuickChart equivalent</em>
+      <img src="/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0,000000,0,0,_&chxt=y&chm=N,000000,0,,10|N,000000,1,,10|N,000000,2,,10" />
+      <span><em>QuickChart equivalent</em></span>
     </div>
 
-    <h2>Supported Parameters</h2>
+    <h2 id="parameters">Supported Parameters</h2>
     <p>
       The most common Google Image Charts parameters are supported.  The implementation of each parameter matches the <a href="https://developers.google.com/chart/image/docs/chart_params">Google Image Charts</a> implementation as closely as possible.
     </p>
@@ -141,6 +153,11 @@
         <td><strong>Required</strong> for all charts</td>
       </tr>
       <tr>
+        <td class="parameter">chs</td>
+        <td>Chart size</td>
+        <td>All charts</td>
+      </tr>
+      <tr>
         <td class="parameter">chdl, chdlp, chdls</td>
         <td>Chart legend text and style</td>
         <td>All charts</td>
@@ -157,18 +174,13 @@
       </tr>
       <tr>
         <td class="parameter">chl</td>
-        <td>Pie chart labels</td>
-        <td>Pie</td>
+        <td>Data labels</td>
+        <td>Bar, Line, Pie</td>
       </tr>
       <tr>
         <td class="parameter">chm</td>
         <td>Text and Data Value Markers</td>
         <td>Bar, Line</td>
-      </tr>
-      <tr>
-        <td class="parameter">chs</td>
-        <td>Chart size</td>
-        <td>All charts</td>
       </tr>
       <tr>
         <td class="parameter">chxt</td>
@@ -199,6 +211,173 @@
     <p class="warning-container">
       <strong><span class="highlight">Parameter missing, or need more customization options?</span></strong>  Don't get locked into a proprietary format.  See the <a href="/documentation">QuickChart documentation</a> for flexible, customizable charts using the open-source Chart.js format.
     </p>
+    <h3>Parameter Information</h3>
+    <div class="parameter-container">
+      <h4>Chart type (cht)</h4>
+      <p class="syntax">
+        <code>cht=&lt;chart_type&gt;</code>
+      </p>
+      <p>
+        This is a required parameter that specifies the type of chart that is rendered.
+        Accepted values include:
+      </p>
+      <ul>
+        <li>Bar charts
+          <ul>
+            <li><strong>bhg</strong>: Horizontal bar chart with grouped bars</li>
+            <li><strong>bvg</strong>: Vertical bar chart with grouped bars</li>
+            <li><strong>bhs</strong>: Horizontal bar chart with stacked bars</li>
+            <li><strong>bvs</strong>: Vertical bar chart with stacked bars</li>
+            <li><strong>bvo</strong>: Vertical bar chart with stacked bars in front of one another (automatically downgraded to "bvs")</li>
+          </ul>
+        </li>
+        <li>Line charts
+          <ul>
+            <li><strong>lc</strong>: Line chart</li>
+            <li><strong>ls</strong>: Sparkline (line chart without axes)</li>
+          </ul>
+        </li>
+        <li>Pie charts
+          <ul>
+            <li><strong>p</strong>: Pie chart</li>
+            <li><strong>pc</strong>: Concentric pie chart</li>
+            <li><strong>p3</strong>: 3D pie chart (automatically downgraded to "p")</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="parameter-container">
+      <h4>Chart data (chd)</h4>
+      <p class="syntax">
+        <code>chd=&lt;format&gt;:data1,data2,data3...</code>
+      </p>
+      <p>
+        This is a required parameter that sets data for your chart.
+      </p>
+      <p>
+        QuickChart supports <a href="https://developers.google.com/chart/image/docs/data_formats">all the data formats</a> offered by Google Image Charts, including basic text format, text format with custom scaling, simple encoding format, and extended encoding format.
+      </p>
+      <p>
+        If you're looking for something easier than Google's cryptic encoding formats, we support an additional "automatic" format (<code><strong>a</strong></code>), which accepts a comma-delimited list of values without requiring any special encoding.
+        For example:
+      </p>
+      <div class="img-container">
+        <img src="/chart?cht=bvg&chd=a:30,50,-1000,1234&chs=100x100" />
+        <span><strong>cht=a:30,50,-1000,1234</strong></span>
+      </div>
+    </div>
+    <div class="parameter-container">
+      <h4>Chart size (chs)</h4>
+      <p class="syntax">
+        <code>chs=&lt;width&gt;x&lt;height&gt;</code>
+      </p>
+      <p>
+        Width and height in pixels.
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Chart legend text and style (chdl, chdlp, chdls)</h4>
+      <p class="syntax">
+        Legend labels: <code>chd=&lt;series_label_1&gt;|&lt;series_label_2&gt;|&lt;series_label_3&gt;|...</code>
+        <br>
+        Legend position: <code>chlp=&lt;position&gt;</code>
+        <br>
+        Legend style: <code>chdls=&lt;font_color&gt;,&lt;font_size&gt;</code>
+      </p>
+      <p>
+        Legend labels are strings delimited by "|".
+      </p>
+      <p>
+        The "position" value should be one of: <code>b, t, r, l</code> - corresponding to bottom, top, left, right.
+      </p>
+      <p>
+        The "style" tuple takes a hexidecimal font color (e.g. <code>00aaff</code>) followed by font size in pixels (e.g. <code>14</code>).
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Chart fill (chf)</h4>
+      <p>
+        Not yet supported!
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Chart grid lines (chg)</h4>
+      <p>
+        Not yet supported!
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Data labels (chl)</h4>
+      <p class="syntax">
+        <code>chl=&lt;label_value_1&gt;|&lt;label_value_2&gt;|&lt;label_value_3&gt;|...</code>
+      </p>
+      <p>
+        Labels are applied consecutively to the data points in chd. If you have multiple series, labels are applied to all points in all sequences in the order specified in chd.  Empty labels are allowed.
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Text and data value markers (chm)</h4>
+      <p class="syntax">
+        <code>chm=</code>
+      </p>
+      <p>
+        Not yet supported!
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Visible axes (chxt)</h4>
+      <p class="syntax">
+        <code>chxt= &lt;<em>axis_1</em>&gt;
+    ,...,
+  &lt;<em>axis_n</em>&gt;</code>
+      </p>
+      <p>
+        Specific which axis to display.  This is used to specify how other axis parameters are applied.  Accepted values are: <code>x</code>, <code>y</code>, <code>x,y</code>, or <code>y,x</code>.
+      </p>
+      <p>
+        Currently we do not support multiple axes (e.g. 2+ X-axes or 2+ Y-axes).
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Chart title and style (chtt, chts)</h4>
+      <p class="syntax">
+        Chart title: <code>chtt=&lt;chart_title&gt;</code>
+        <br>
+        Chart style: <code>chts=&lt;font_color&gt;,&lt;font_size&gt;</code>
+      </p>
+      <p>
+        Chart title is a string that is displayed atop the chart.  You can insert newlines by using the "|" character.
+      </p>
+      <p>
+        Chart style is determined by font color, a hex code (e.g. <code>00aaff</code>) and font size in pixels (e.g. <code>14</code>).
+      </p>
+    </div>
+    <div class="parameter-container">
+      <h4>Axes ranges (chxr)</h4>
+      <p class="syntax">
+        <code>chxr=
+            &lt;<em>axis_index</em>&gt;,
+            &lt;<em>start_val</em>&gt;,
+            &lt;<em>end_val</em>&gt;,
+      &lt;<em>opt_step</em>&gt; | ...</code>
+      </p>
+      <p>
+        Specify the range of values that appear on each axis independently using the chxr parameter.  Note that unlike the Google Image Charts API, scaling the axes also scales the presentation of the chart.
+      </p>
+      <p>
+        You must make an axis visible using the chxt parameter if you want to specify its range. To specify custom axis values, use the chxl parameter.
+      </p>
+      <p>
+        Separate multiple axis label ranges using the pipe character ( | ).
+      </p>
+      <p>
+      <p>
+        <a href="https://developers.google.com/chart/image/docs/chart_params#axis_range">Full axis range documentation</a>
+      </p>
+    </div>
+
+    <hr/>
+
     <h2>Bar charts</h2>
     <p>
       Here are some examples of bar charts.  Each example shows a chart generated by Google Image Charts followed by the equivalent chart generated by QuickChart.
@@ -214,7 +393,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=76A4FB&chls=2.0&chs=300x200&chxl=0:|2001|2002|2003&chxp=0,0" />
+      <img src="/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=76A4FB&chls=2.0&chs=300x200&chxl=0:|2001|2002|2003&chxp=0,0" />
     </div>
     <p>
       before
@@ -226,7 +405,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?chxt=x,x,y,y&cht=bvs&chd=s:c9ucD&chls=2.0&chs=300x200&chxl=1:%7CMartinis%7C3:%7CScore&chxp=1,50%7C3,50" />
+      <img src="/chart?chxt=x,x,y,y&cht=bvs&chd=s:c9ucD&chls=2.0&chs=300x200&chxl=1:%7CMartinis%7C3:%7CScore&chxp=1,50%7C3,50" />
     </div>
     <h3>Horizontal bar charts</h3>
     <p>
@@ -239,7 +418,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=bhs&chs=300x200&chd=t:10,50,60,80,40|50,60,100,40,20&chco=4d89f9,c6d9fd&chbh=20&chds=0,160" />
+      <img src="/chart?cht=bhs&chs=300x200&chd=t:10,50,60,80,40|50,60,100,40,20&chco=4d89f9,c6d9fd&chbh=20&chds=0,160" />
     </div>
     <p>
       before
@@ -251,7 +430,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=bhs&chco=000000,FF0000|00FF00|0000FF&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
+      <img src="/chart?cht=bhs&chco=000000,FF0000|00FF00|0000FF&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
     </div>
     <p>
       before
@@ -263,7 +442,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=bhs&chco=FF0000|00FF00|0000FF,FFC6A5|DEF3BD|C6EFF7&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
+      <img src="/chart?cht=bhs&chco=FF0000|00FF00|0000FF,FFC6A5|DEF3BD|C6EFF7&chs=300x200&chd=s:FOE,elo&chxt=x,y&chxl=1:|Dec|Nov|Oct|0:||20K||60K||100K|" />
     </div>
     <h2>Other</h2>
     <p>
@@ -276,7 +455,7 @@
       Becomes this one
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=lc&chco=FF0000,00FF00,0000FF&chs=300x200&chd=s:FOETHECat,lkjtf3asv,KATYPSNXJ&chxt=x,y&chxl=0:|Oct|Nov|Dec|1:||20K||60K||100K" />
+      <img src="/chart?cht=lc&chco=FF0000,00FF00,0000FF&chs=300x200&chd=s:FOETHECat,lkjtf3asv,KATYPSNXJ&chxt=x,y&chxl=0:|Oct|Nov|Dec|1:||20K||60K||100K" />
     </div>
     <p>
       This bad boy
@@ -288,7 +467,7 @@
       Becomes this
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=bvs&chd=s:YUVmw1&chco=FF0000&chs=180x150&chtt=Site+visitors+by+month%7CJanuary+to+July&chbh=22,4" />
+      <img src="/chart?cht=bvs&chd=s:YUVmw1&chco=FF0000&chs=180x150&chtt=Site+visitors+by+month%7CJanuary+to+July&chbh=22,4" />
     </div>
     <p>
       Before
@@ -300,7 +479,7 @@
       After
     </p>
     <div class="img-container">
-      <img src="/gchart?&cht=ls&chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&chco=ff0000,00ff00,0000ff&chs=250x150&chdl=NASDAQ|FTSE100|DOW" />
+      <img src="/chart?&cht=ls&chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&chco=ff0000,00ff00,0000ff&chs=250x150&chdl=NASDAQ|FTSE100|DOW" />
     </div>
     <p>
       First
@@ -312,7 +491,7 @@
       Second
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=lc&chd=s:Uf9a,a3fG&chs=300x200&chl=1%7C2%7C3%7C4&chf=bg,s,e0e0e0&chco=000000,0000FF&chma=30,30,30,30&chdl=Temp%7CSales" />
+      <img src="/chart?cht=lc&chd=s:Uf9a,a3fG&chs=300x200&chl=1%7C2%7C3%7C4&chf=bg,s,e0e0e0&chco=000000,0000FF&chma=30,30,30,30&chdl=Temp%7CSales" />
     </div>
     <p>
       before
@@ -324,7 +503,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?chxt=x,y,r,t&cht=bhs&chd=s:EUjVu&chco=76A4FB&chls=2.0&chs=200x190" />
+      <img src="/chart?chxt=x,y,r,t&cht=bhs&chd=s:EUjVu&chco=76A4FB&chls=2.0&chs=200x190" />
     </div>
     <p>
       before
@@ -336,7 +515,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?chxt=x,y&chxl=0:%7CJan%7CFeb%7CMarch%7CApril%7CMay%7C1:%7CMin%7CMid%7CMax&cht=lc&chd=s:cEAELFJHHHKUju9uuXUc&chco=76A4FB&chls=2.0&chs=300x200" />
+      <img src="/chart?chxt=x,y&chxl=0:%7CJan%7CFeb%7CMarch%7CApril%7CMay%7C1:%7CMin%7CMid%7CMax&cht=lc&chd=s:cEAELFJHHHKUju9uuXUc&chco=76A4FB&chls=2.0&chs=300x200" />
     </div>
     <p>
       before
@@ -348,7 +527,7 @@
       after
     </p>
     <div class="img-container">
-      <img src="/gchart?cht=pc&chd=s:Helo,Wrld&chs=200x100" />
+      <img src="/chart?cht=pc&chd=s:Helo,Wrld&chs=200x100" />
     </div>
     <h2>Bar Charts</h2>
     <h2>Line Charts</h2>
