@@ -5,6 +5,7 @@ const expressNunjucks = require('express-nunjucks');
 const qs = require('qs');
 const rateLimit = require('express-rate-limit');
 const text2png = require('text2png');
+const javascriptStringify = require('javascript-stringify').stringify;
 
 const apiKeys = require('./api_keys');
 const packageJson = require('./package.json');
@@ -213,6 +214,11 @@ function doRender(req, res, opts) {
 
 function handleGChart(req, res) {
   const converted = toChartJs(req.query);
+  if (req.query.format === 'chartjs-config') {
+    res.end(javascriptStringify(converted, undefined, 2));
+    return;
+  }
+
   renderChart(converted.width, converted.height, 'white', undefined, converted.chart).then(buf => {
     res.writeHead(200, {
       'Content-Type': 'image/png',
