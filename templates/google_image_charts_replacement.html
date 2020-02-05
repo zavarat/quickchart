@@ -296,8 +296,20 @@
     </div>
     <div id="chf-param" class="parameter-container">
       <h4>Chart fill (chf)</h4>
+      <p class="syntax">
+        <code>chf=&lt;fill_type&gt;,s,&lt;color&gt;</code>
+      </p>
       <p>
-        Not yet supported!
+        <code>fill_type</code> is either the string <code>bg</code> (for background fill) or <code>a</code> (for transparent fill).  In most cases, you should choose <code>bg</code>.
+      </p>
+      <p>
+        <code>color</code> is the hex color of the chart background, e.g. <code>00aaff</code>.  Transparency is supported, e.g. <code>00aaffbb</code>.
+      </p>
+      <p>
+        For backwards compatibility purposes, if fill_type <code>a</code> is selected, QuickChart will expect an 8-digit hex code but apply only the last two alpha digits to change chart transparency.
+      </p>
+      <p>
+        If you are looking to color bar charts, we recommend that you use the <a href="#chco-param">chco</a> param instead.
       </p>
     </div>
     <div id="chg-param" class="parameter-container">

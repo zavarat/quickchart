@@ -219,7 +219,13 @@ function handleGChart(req, res) {
     return;
   }
 
-  renderChart(converted.width, converted.height, 'white', undefined, converted.chart).then(buf => {
+  renderChart(
+    converted.width,
+    converted.height,
+    converted.backgroundColor,
+    undefined,
+    converted.chart,
+  ).then(buf => {
     res.writeHead(200, {
       'Content-Type': 'image/png',
       'Content-Length': buf.length,
