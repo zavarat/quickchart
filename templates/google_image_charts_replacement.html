@@ -674,8 +674,48 @@
       Existing Google Image Charts users may be interested in converting their charts to <a href="https://www.chartjs.org">Chart.js</a>.  The format is flexible, open-source, and therefore much more future-proof than a proprietary chart format.  Also, you can use Chart.js in the browser to enable interactivity.
 		</p>
 		<p>
-			Obtain an equivalent Chart.js JSON config by appending <code><strong>format=chartjs-config</strong></code> to your Google Image Charts request.
+			Obtain an equivalent Chart.js JSON config by appending <code><strong>format=chartjs-config</strong></code> to your Google Image Charts request.  The response will look something like this:
     </p>
+      <a href="/chart?cht=pc&chd=s:Helo,Wrld&chs=200x100&format=chartjs-config">/chart?cht=pc&amp;chd=s:Helo,Wrld&amp;chs=200x100&amp;<span class="highlight"><strong>format=chartjs-config</strong></span></a>
+    </p>
+    <code><pre>{
+  data: {
+    labels: [ 0, 1, 2, 3 ],
+    datasets: [
+      {
+        data: [ 22, 43, 37, 29 ],
+        fill: false,
+        backgroundColor: undefined,
+        borderColor: undefined,
+        borderWidth: 2,
+        pointRadius: 0
+      },
+      {
+        data: [ 7, 30, 37, 40 ],
+        fill: false,
+        backgroundColor: undefined,
+        borderColor: undefined,
+        borderWidth: 2,
+        pointRadius: 0
+      }
+    ]
+  },
+  options: {
+    plugins: {
+      datalabels: {
+        display: false
+      }
+    },
+    legend: {
+      display: false
+    },
+    layout: {
+      padding: { left: 0, right: 0, top: 10, bottom: 0 }
+    }
+  },
+  type: 'pie'
+}
+    </pre></code>
   </div>
 </div>
 {% endblock %}

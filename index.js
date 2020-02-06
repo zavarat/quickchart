@@ -215,7 +215,7 @@ function doRender(req, res, opts) {
 function handleGChart(req, res) {
   const converted = toChartJs(req.query);
   if (req.query.format === 'chartjs-config') {
-    res.end(javascriptStringify(converted, undefined, 2));
+    res.end(javascriptStringify(converted.chart, undefined, 2));
     return;
   }
 
