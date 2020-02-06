@@ -20,6 +20,10 @@
     margin-bottom: 1em;
   }
 
+  .chart-caption {
+    font-family: monospace;
+  }
+
   .syntax {
     background-color: #eee;
     padding: 1em;
@@ -263,7 +267,7 @@
       </p>
       <div class="img-container">
         <img src="/chart?cht=bvg&chd=a:30,50,-1000,1234&chs=100x100" />
-        <span><strong>cht=a:30,50,-1000,1234</strong></span>
+        <span class="chart-caption">cht=a:30,50,-1000,1234</span>
       </div>
     </div>
     <div id="chs-param" class="parameter-container">
@@ -293,6 +297,10 @@
       <p>
         The "style" tuple takes a hexidecimal font color (e.g. <code>00aaff</code>) followed by font size in pixels (e.g. <code>14</code>).
       </p>
+      <div class="img-container">
+        <img src="/chart?&cht=ls&chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&chco=ff0000,00ff00,0000ff&chs=250x150&chdl=NASDAQ|FTSE100|DOW" />
+        <span class="chart-caption">chdl=NASDAQ|FTSE100|DOW</span>
+      </div>
     </div>
     <div id="chf-param" class="parameter-container">
       <h4>Chart fill (chf)</h4>
@@ -311,6 +319,10 @@
       <p>
         If you are looking to color bar charts, we recommend that you use the <a href="#chco-param">chco</a> param instead.
       </p>
+      <div class="img-container">
+        <img src="/chart?cht=lc&chd=s:Uf9a,a3fG&chs=300x200&chl=1%7C2%7C3%7C4&chf=bg,s,e0e0e0&chco=000000,0000FF&chma=30,30,30,30&chdl=Temp%7CSales" />
+        <span class="chart-caption">chf=bg,s,e0e0e0</span>
+      </div>
     </div>
     <div id="chg-param" class="parameter-container">
       <h4>Chart grid lines (chg)</h4>
@@ -326,6 +338,10 @@
       <p>
         Labels are applied consecutively to the data points in chd. If you have multiple series, labels are applied to all points in all sequences in the order specified in chd.  Empty labels are allowed.
       </p>
+      <div class="img-container">
+        <img src="/chart?cht=p&chd=s:Uf9a&chs=200x200&chl=Jan|Feb|Mar|Apr" />
+        <span class="chart-caption">chl=Jan|Feb|Mar|Apr</span>
+      </div>
     </div>
     <div id="chm-param" class="parameter-container">
       <h4>Text and data value markers (chm)</h4>
@@ -341,6 +357,10 @@
       <p>
         Future support for data label colors, size, etc is planned.  For more detail, see the <a href="https://developers.google.com/chart/image/docs/chart_params#gcharts_data_point_labels">full Google Image Charts</a> documentation.
       </p>
+      <div class="img-container">
+        <img src="/chart?cht=bvs&chs=100x150&chd=t:5,5,5|10,10,10|15,15,15&chds=0,120&chco=4d89f9,c6d9fd,00B88A&chbh=20&chds=0,40&chm=N,000000,0,0,10|N,000000,0,1,10|N,000000,0,2,10|N,000000,1,0,10|N,000000,1,1,10|N,000000,1,2,10|N,000000,2,0,10|N,000000,2,1,10|N,000000,2,2,10&chxs=0,000000,0,0,_&chxt=y&chma=20,20,20,20" />
+        <span class="chart-caption">chm=N,000000,1|N,000000,1|...|</span>
+      </div>
     </div>
     <div id="chxt-param" class="parameter-container">
       <h4>Visible axes (chxt)</h4>
@@ -369,6 +389,10 @@
       <p>
         Chart style is determined by font color, a hex code (e.g. <code>00aaff</code>) and font size in pixels (e.g. <code>14</code>).
       </p>
+      <div class="img-container">
+        <img src="/chart?cht=bvs&chd=s:YUVmw1&chco=FF0000&chs=180x150&chtt=Site+visitors+by+month&chbh=22,4" />
+        <span class="chart-caption">chtt=Site+visitors+by+month</span>
+      </div>
     </div>
     <div id="chxr-param" class="parameter-container">
       <h4>Axis ranges (chxr)</h4>
@@ -413,6 +437,10 @@
       <p>
         <a href="https://developers.google.com/chart/image/docs/chart_params#axis_labels">Full axis labels documentation</a>
       </p>
+      <div class="img-container">
+        <img src="/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=76A4FB&chls=2.0&chs=300x200&chxl=0:|2001|2002|2003&chxp=0,0" />
+        <span class="chart-caption">chxl=|2001|2002|2003</span>
+      </div>
     </div>
     <div id="chxs-param" class="parameter-container">
       <h4>Axis label styles (chxs)</h4>
@@ -502,6 +530,10 @@
       <p>
         <a href="https://developers.google.com/chart/image/docs/chart_params#axis-label-styles-chxs">Full axis label styles documentation</a>
       </p>
+      <div class="img-container">
+        <img src="/chart?cht=bvg&chs=300x200&chd=t:5,5,5|10,10,10|15,15,15&chco=4d89f9,c6d9fd,00B88A&chds=0,20&chbh=a&chxs=0N*cUSD*Mil,000000&chxt=y" />
+        <span class="chart-caption">chxs=0N*cUSD*Mil,000000</span>
+      </div>
     </div>
 
     <hr/>
@@ -584,42 +616,6 @@
     </p>
     <div class="img-container">
       <img src="/chart?cht=lc&chco=FF0000,00FF00,0000FF&chs=300x200&chd=s:FOETHECat,lkjtf3asv,KATYPSNXJ&chxt=x,y&chxl=0:|Oct|Nov|Dec|1:||20K||60K||100K" />
-    </div>
-    <p>
-      This bad boy
-    </p>
-    <div class="img-container">
-      <img src="https://chart.googleapis.com/chart?cht=bvs&chd=s:YUVmw1&chco=FF0000&chs=180x150&chtt=Site+visitors+by+month%7CJanuary+to+July&chbh=22,4" />
-    </div>
-    <p>
-      Becomes this
-    </p>
-    <div class="img-container">
-      <img src="/chart?cht=bvs&chd=s:YUVmw1&chco=FF0000&chs=180x150&chtt=Site+visitors+by+month%7CJanuary+to+July&chbh=22,4" />
-    </div>
-    <p>
-      Before
-    </p>
-    <div class="img-container">
-      <img src="https://chart.googleapis.com/chart?&cht=ls&chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&chco=ff0000,00ff00,0000ff&chs=250x150&chdl=NASDAQ|FTSE100|DOW" />
-    </div>
-    <p>
-      After
-    </p>
-    <div class="img-container">
-      <img src="/chart?&cht=ls&chd=t:0,30,60,70,90,95,100|20,30,40,50,60,70,80|10,30,40,45,52&chco=ff0000,00ff00,0000ff&chs=250x150&chdl=NASDAQ|FTSE100|DOW" />
-    </div>
-    <p>
-      First
-    </p>
-    <div class="img-container">
-      <img src="https://chart.googleapis.com/chart?cht=lc&chd=s:Uf9a,a3fG&chs=300x200&chl=1%7C2%7C3%7C4&chf=bg,s,e0e0e0&chco=000000,0000FF&chma=30,30,30,30&chdl=Temp%7CSales" />
-    </div>
-    <p>
-      Second
-    </p>
-    <div class="img-container">
-      <img src="/chart?cht=lc&chd=s:Uf9a,a3fG&chs=300x200&chl=1%7C2%7C3%7C4&chf=bg,s,e0e0e0&chco=000000,0000FF&chma=30,30,30,30&chdl=Temp%7CSales" />
     </div>
     <p>
       before
