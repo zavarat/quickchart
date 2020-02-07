@@ -100,7 +100,24 @@
     <ul class="docs-list">
       <li><a href="#getting-started">Getting started</a></li>
       <li><a href="#migrating">Migrating</a></li>
-      <li><a href="#parameters">Supported parameters</a></li>
+      <li><a href="#parameters">Supported chart parameters</a></li>
+      <li>
+        <ul>
+          <li><a href="#cht-param">Chart type</a></li>
+          <li><a href="#chd-param">Data</a></li>
+          <li><a href="#chs-param">Size</a></li>
+          <li><a href="#chdl-param">Legend</a></li>
+          <li><a href="#chf-param">Background color</a></li>
+          <li><a href="#chg-param">Grid lines</a></li>
+          <li><a href="#chl-param">Data labels</a></li>
+          <li><a href="#chm-param">Data value markers</a></li>
+          <li><a href="#chxt-param">Visible axes</a></li>
+          <li><a href="#chtt-param">Chart title</a></li>
+          <li><a href="#chxr-param">Axis range</a></li>
+          <li><a href="#chxl-param">Axis labels</a></li>
+          <li><a href="#chxs-param">Axis style</a></li>
+        </ul>
+      </li>
       <li>
         <a href="#chart-gallery">Chart gallery</a>
         <ul>
@@ -110,9 +127,8 @@
           <li><a href="#qr">QR codes</a></li>
         </ul>
       </li>
-      <li><a href="#plugins">Annotations &amp; labels</a></li>
-      <li><a href="#sandbox">Sandbox Editor</a></li>
-      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#convert-to-chartjs">Chart.js converter</a></li>
+      <li><a href="/documentation">Full documentation</a></li>
       <li><a href="mailto:support@quickchart.io">Contact support</a></li>
     </ul>
   </div>
@@ -165,67 +181,67 @@
         </tr>
       </thead>
       <tr>
-        <td class="parameter">cht</td>
+        <td class="parameter"><a href="#cht-param">cht</a></td>
         <td>Chart type</td>
         <td><strong>Required</strong> for all charts</td>
       </tr>
       <tr>
-        <td class="parameter">chd</td>
+        <td class="parameter"><a href="#chd-param">chd</a></td>
         <td>Chart data string</td>
         <td><strong>Required</strong> for all charts</td>
       </tr>
       <tr>
-        <td class="parameter">chs</td>
+        <td class="parameter"><a href="#chs-param">chs</a></td>
         <td>Chart size</td>
         <td>All charts</td>
       </tr>
       <tr>
-        <td class="parameter">chdl, chdlp, chdls</td>
+        <td class="parameter"><a href="#chdl-param">chdl, chdlp, chdls</a></td>
         <td>Chart legend text and style</td>
         <td>All charts</td>
       </tr>
       <tr>
-        <td class="parameter">chf</td>
+        <td class="parameter"><a href="#chf-param">chf</a></td>
         <td>Chart fill</td>
         <td>All charts</td>
       </tr>
       <tr>
-        <td class="parameter">chg</td>
+        <td class="parameter"><a href="#chg-param">chg</a></td>
         <td>Chart grid lines</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td class="parameter">chl</td>
+        <td class="parameter"><a href="#chl-param">chl</a></td>
         <td>Data labels</td>
         <td>Bar, Line, Pie</td>
       </tr>
       <tr>
-        <td class="parameter">chm</td>
+        <td class="parameter"><a href="#chm-param">chm</a></td>
         <td>Text and Data Value Markers</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td class="parameter">chxt</td>
+        <td class="parameter"><a href="#chxt-param">chxt</a></td>
         <td>Visible axes</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td class="parameter">chtt, chts</td>
+        <td class="parameter"><a href="#chtt-param">chtt, chts</a></td>
         <td>Chart title and style</td>
         <td>All charts</td>
       </tr>
       <tr>
-        <td class="parameter">chxr</td>
+        <td class="parameter"><a href="#chxr-param">chxr</a></td>
         <td>Axis ranges</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td class="parameter">chxl</td>
+        <td class="parameter"><a href="#chxl-param">chxl</a></td>
         <td>Axis labels</td>
         <td>Bar, Line</td>
       </tr>
       <tr>
-        <td class="parameter">chxs</td>
+        <td class="parameter"><a href="#chxs-param">chxs</a></td>
         <td>Axis label styles</td>
         <td>Bar, Line</td>
       </tr>
@@ -690,7 +706,7 @@
     <p>
       xx
     </p>
-    <h2>Converting to Chart.js</h2>
+    <h2 id="convert-to-chartjs">Converting to Chart.js</h2>
     <p>
       Existing Google Image Charts users may be interested in converting their charts to <a href="https://www.chartjs.org">Chart.js</a>.  The format is flexible, open-source, and therefore much more future-proof than a proprietary chart format.  Also, you can use Chart.js in the browser to enable interactivity.
 		</p>
