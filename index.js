@@ -197,7 +197,10 @@ function doRender(req, res, opts) {
   const backgroundColor = opts.backgroundColor || 'transparent';
 
   const start = performance.now();
-  renderChart(width, height, backgroundColor, devicePixelRatio, untrustedInput)
+  const context = {
+    ip: req.headers['x-forwarded-for'] || req.ip,
+  };
+  renderChart(width, height, backgroundColor, devicePixelRatio, untrustedInput, context)
     .then((...args) => {
       const end = performance.now();
       logger.info(`renderChart execution took ${Math.floor(end - start)} ms`);
