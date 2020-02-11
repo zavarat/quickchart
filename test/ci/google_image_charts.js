@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 
-const { parseSeriesData } = require('../../lib/image_charts');
+const { parseSeriesData } = require('../../lib/google_image_charts');
 
 describe('google image charts', () => {
   it('parses text encoding', async () => {

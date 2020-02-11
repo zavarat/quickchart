@@ -13,7 +13,7 @@ const telemetry = require('./telemetry');
 const { getPdfBufferFromPng, getPdfBufferWithText } = require('./lib/pdf');
 const { logger } = require('./logging');
 const { renderChart } = require('./lib/charts');
-const { toChartJs } = require('./lib/image_charts');
+const { toChartJs } = require('./lib/google_image_charts');
 const { renderQr, DEFAULT_QR_SIZE } = require('./lib/qr');
 
 const app = express();
