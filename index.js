@@ -124,8 +124,8 @@ app.get('/api/account/:key', (req, res) => {
   });
 });
 
-function failPng(res, msg) {
-  res.writeHead(500, {
+function failPng(res, msg, statusCode = 500) {
+  res.writeHead(statusCode, {
     'Content-Type': 'image/png',
   });
   res.end(
@@ -268,6 +268,11 @@ app.get('/chart', (req, res) => {
     encoding: req.query.encoding || 'url',
   };
 
+  if (req.query.sig && !apiKeys.verifySignature(opts.chart, req.query.sig, req.query.accountId)) {
+    failPng(res, 'Invalid signature', 403);
+    return;
+  }
+
   const outputFormat = (req.query.f || req.query.format || '').toLowerCase();
 
   if (outputFormat === 'pdf') {
@@ -300,8 +305,14 @@ app.post('/chart', (req, res) => {
 });
 
 app.get('/qr', (req, res) => {
-  if (!req.query.text) {
+  const qrText = req.query.text;
+  if (!qrText) {
     failPng(res, 'You are missing variable `text`');
+    return;
+  }
+
+  if (req.query.sig && !apiKeys.verifySignature(qrText, req.query.sig, req.query.accountId)) {
+    failPng(res, 'Invalid signature', 403);
     return;
   }
 
@@ -320,7 +331,7 @@ app.get('/qr', (req, res) => {
 
   let qrData;
   try {
-    qrData = decodeURIComponent(req.query.text);
+    qrData = decodeURIComponent(qrText);
   } catch (err) {
     logger.warn('URI malformed', err);
     failPng(res, 'URI malformed');
