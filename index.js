@@ -1,9 +1,7 @@
 const path = require('path');
-const { performance } = require('perf_hooks');
 
 const RedisStore = require('rate-limit-redis');
 const express = require('express');
-const expressNunjucks = require('express-nunjucks');
 const javascriptStringify = require('javascript-stringify').stringify;
 const qs = require('qs');
 const rateLimit = require('express-rate-limit');
@@ -15,6 +13,7 @@ const telemetry = require('./telemetry');
 const { getPdfBufferFromPng, getPdfBufferWithText } = require('./lib/pdf');
 const { logger } = require('./logging');
 const { renderChart } = require('./lib/charts');
+const { renderGraphviz } = require('./lib/graphviz');
 const { toChartJs } = require('./lib/google_image_charts');
 const { renderQr, DEFAULT_QR_SIZE } = require('./lib/qr');
 
@@ -31,9 +30,13 @@ app.set('query parser', str =>
     },
   }),
 );
-app.set('views', `${__dirname}/templates`);
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
+
+app.use(
+  express.json({
+    limit: process.env.EXPRESS_JSON_LIMIT || '100kb',
+  }),
+);
+
 app.use(express.urlencoded());
 
 if (process.env.RATE_LIMIT_PER_MIN) {
@@ -72,29 +75,10 @@ if (process.env.RATE_LIMIT_PER_MIN) {
   app.use('/chart', limiter);
 }
 
-expressNunjucks(app, {
-  watch: isDev,
-  noCache: isDev,
-});
-
 app.get('/', (req, res) => {
-  res.render('index');
-});
-
-app.get('/pricing', (req, res) => {
-  res.render('pricing');
-});
-
-app.get('/documentation', (req, res) => {
-  res.render('docs');
-});
-
-app.get('/documentation/migrating-from-google-image-charts', (req, res) => {
-  res.render('google_image_charts_replacement');
-});
-
-app.get('/robots.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, './templates/robots.txt'));
+  res.send(
+    'QuickChart is running!<br><br>If you are using QuickChart commercially, please consider <a href="https://quickchart.io/pricing/">purchasing a license</a> to support the project.',
+  );
 });
 
 app.post('/telemetry', (req, res) => {
@@ -110,10 +94,6 @@ app.post('/telemetry', (req, res) => {
   }
 
   res.send({ success: true });
-});
-
-app.get('/payment-success', (req, res) => {
-  res.render('payment_success');
 });
 
 app.get('/api/account/:key', (req, res) => {
@@ -136,6 +116,24 @@ function failPng(res, msg, statusCode = 500) {
   );
 }
 
+function failSvg(res, msg, statusCode = 500) {
+  res.writeHead(statusCode, {
+    'Content-Type': 'image/svg+xml',
+  });
+  res.end(`
+<svg viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    p {
+      font-size: 8px;
+    }
+  </style>
+  <foreignObject width="240" height="80"
+   requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+    <p xmlns="http://www.w3.org/1999/xhtml">${msg}</p>
+  </foreignObject>
+</svg>`);
+}
+
 async function failPdf(res, msg) {
   const buf = await getPdfBufferWithText(msg);
   res.writeHead(500, {
@@ -152,7 +150,7 @@ function doRenderChart(req, res, opts) {
       'Content-Length': buf.length,
 
       // 1 week cache
-      'Cache-Control': 'public, max-age=604800',
+      'Cache-Control': isDev ? 'no-cache' : 'public, max-age=604800',
     });
     res.end(buf);
   };
@@ -169,7 +167,7 @@ async function doRenderPdf(req, res, opts) {
       'Content-Length': pdfBuf.length,
 
       // 1 week cache
-      'Cache-Control': 'public, max-age=604800',
+      'Cache-Control': isDev ? 'no-cache' : 'public, max-age=604800',
     });
     res.end(pdfBuf);
   };
@@ -185,13 +183,13 @@ function doRender(req, res, opts) {
   let height = 300;
   let width = 500;
   if (opts.height) {
-    const heightNum = Math.min(1000, parseInt(opts.height, 10));
+    const heightNum = parseInt(opts.height, 10);
     if (!Number.isNaN(heightNum)) {
       height = heightNum;
     }
   }
   if (opts.width) {
-    const widthNum = Math.min(1000, parseInt(opts.width, 10));
+    const widthNum = parseInt(opts.width, 10);
     if (!Number.isNaN(widthNum)) {
       width = widthNum;
     }
@@ -214,22 +212,39 @@ function doRender(req, res, opts) {
 
   const backgroundColor = opts.backgroundColor || 'transparent';
 
-  const start = performance.now();
   renderChart(width, height, backgroundColor, devicePixelRatio, untrustedInput)
-    .then((...args) => {
-      const end = performance.now();
-      logger.info(`renderChart execution took ${Math.floor(end - start)} ms`);
-      opts.onRenderHandler(...args);
-    })
+    .then(opts.onRenderHandler)
     .catch(err => {
       logger.warn('Chart error', err);
       opts.failFn(res, err);
     });
 }
 
-function handleGChart(req, res) {
+async function handleGChart(req, res) {
+  if (req.query.cht.startsWith('gv')) {
+    // Graphviz chart
+    const format = 'svg'; // Hardcode to svg for now
+    const engine = req.query.cht.indexOf(':') > -1 ? req.query.cht.split(':')[1] : 'dot';
+    try {
+      const buf = await renderGraphviz(req.query.chl, format, engine);
+      res
+        .status(200)
+        .type(format === 'png' ? 'image/png' : 'image/svg+xml')
+        .end(buf);
+    } catch (err) {
+      if (format === 'png') {
+        failPng(res, `Graph Error: ${err}`);
+      } else {
+        failSvg(res, `Graph Error: ${err}`);
+      }
+    }
+  }
   const converted = toChartJs(req.query);
   if (req.query.format === 'chartjs-config') {
+    // Chart.js config
+    res.writeHead(200, {
+      'Content-Type': 'application/json',
+    });
     res.end(javascriptStringify(converted.chart, undefined, 2));
     return;
   }
@@ -246,17 +261,17 @@ function handleGChart(req, res) {
       'Content-Length': buf.length,
 
       // 1 week cache
-      'Cache-Control': 'public, max-age=604800',
+      'Cache-Control': isDev ? 'no-cache' : 'public, max-age=604800',
     });
     res.end(buf);
   });
   // TODO(ian): Telemetry.
 }
 
-app.get('/chart', (req, res) => {
+app.get('/chart', async (req, res) => {
   if (req.query.cht) {
     // This is a Google Image Charts-compatible request.
-    return handleGChart(req, res);
+    return await handleGChart(req, res);
   }
 
   const opts = {
@@ -354,7 +369,7 @@ app.get('/qr', (req, res) => {
         'Content-Length': buf.length,
 
         // 1 week cache
-        'Cache-Control': 'public, max-age=604800',
+        'Cache-Control': isDev ? 'no-cache' : 'public, max-age=604800',
       });
       res.end(buf);
     })
